@@ -37,9 +37,8 @@
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:hint="Password"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail"/>
 
     <Button
         android:id="@+id/btnSubmit"

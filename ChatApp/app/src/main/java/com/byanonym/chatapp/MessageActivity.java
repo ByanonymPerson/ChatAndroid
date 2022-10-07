@@ -2,6 +2,7 @@ package com.byanonym.chatapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +29,7 @@ public class MessageActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ImageView imgToolBar,imgSend;
 
-
+    private  MessageAdapter messageAdapter;
     private ArrayList<Message> messages;
 
 
@@ -51,8 +53,21 @@ public class MessageActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressMessage);
         imgToolBar = findViewById(R.id.img_toolbar);
 
+        messageAdapter = new MessageAdapter(messages,getIntent().getStringExtra("my_img"),getIntent().getStringExtra("img_of_roommate"),MessageActivity.this);
         txtChattingWith.setText(usernameOfTheRoommate);
         messages = new ArrayList<>();
+
+        imgSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase.getInstance().getReference("message/"+chatRoomId).push().setValue(new Message(FirebaseAuth.getInstance().getCurrentUser().getEmail(),emailOfRoomate,edtMessageInput.getText().toString()));
+                edtMessageInput.setText("");
+            }
+        });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(messageAdapter);
+        Glide.with(MessageActivity.this).load(getIntent().getStringExtra("img_of_roommate")).placeholder(R.drawable.account_img).error(R.drawable.account_img).into(imgToolBar);
 
         setUpChatRoom();
     }
@@ -87,6 +102,7 @@ public class MessageActivity extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     messages.add(dataSnapshot.getValue(Message.class));
                 }
+                messageAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(messages.size()-1);
                 recyclerView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
