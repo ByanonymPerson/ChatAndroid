@@ -62,16 +62,16 @@
         android:id="@+id/edtText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="45dp"
-        android:maxHeight="100dp"
         android:layout_marginHorizontal="9dp"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="200dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/message_input_background"
+        android:maxHeight="100dp"
+        android:minHeight="45dp"
+        android:paddingHorizontal="200dp"
+        android:paddingVertical="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imgSendMessage"
-        app:layout_constraintHorizontal_bias="0.605"
+        app:layout_constraintHorizontal_bias="0.388"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView

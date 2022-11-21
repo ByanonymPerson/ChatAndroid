@@ -19,9 +19,11 @@ import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageHolder> {
 
-    private ArrayList<Message> messages;
+    private ArrayList<Message> messages ;
     private String senderImg,receiverImg;
     private Context context;
+
+
 
     public MessageAdapter(ArrayList<Message> messages, String senderImg, String receiverImg, Context context) {
         this.messages = messages;
@@ -69,7 +71,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
 
     @Override
     public int getItemCount() {
-        return messages.size();
+        return messages == null ? 0 : messages.size();
     }
 
     static class  MessageHolder extends RecyclerView.ViewHolder{
